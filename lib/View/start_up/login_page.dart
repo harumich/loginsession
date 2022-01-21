@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:loginsession/View/main_page.dart';
 import 'package:loginsession/View/start_up/create_account_page.dart';
 import 'package:loginsession/utils/authentication.dart';
+import 'package:loginsession/utils/firestore/users.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -63,8 +65,11 @@ class _LoginPageState extends State<LoginPage> {
                 ElevatedButton(
                     onPressed: () async {
                       var result = await Authentication.emailSignIn(email: emailController.text, pass: passController.text);
-                      if(result == true) {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
+                      if(result is UserCredential) {
+                        var _result = await UserFirestore.getUser(result.user!.uid);
+                        if(_result == true) {
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
+                        }
                       }
                     },
                     child: Text('emailでログイン')

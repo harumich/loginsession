@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:loginsession/View/start_up/login_page.dart';
+import 'package:loginsession/utils/authentication.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -20,7 +22,27 @@ class _MainPageState extends State<MainPage> {
         elevation: 2,
         iconTheme: IconThemeData(color: Colors.black),  //戻る矢印を黒色にする
       ),
-      body: Text('ログイン成功！', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+      body: Container(
+        width: double.infinity,
+        child: Column(
+          children: [
+            SizedBox(height: 20),
+            Text('ログイン成功！', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            SizedBox(height: 50),
+            ElevatedButton(onPressed: () {
+              Authentication.signOut();
+              while(Navigator.canPop(context)) {
+                Navigator.pop(context);
+              }
+              Navigator.pushReplacement(context, MaterialPageRoute(
+                  builder: (context) => LoginPage()
+              ));
+            },
+                child: Text('ログアウト')
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

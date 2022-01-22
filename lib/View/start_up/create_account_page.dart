@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:loginsession/View/start_up/check_email_page.dart';
 import 'package:loginsession/model/account.dart';
 import 'package:loginsession/utils/authentication.dart';
 import 'package:loginsession/utils/firestore/users.dart';
@@ -128,7 +129,8 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                         );
                         var _result = await UserFirestore.setUser(newAccount);
                         if(_result == true) {
-                          Navigator.pop(context);
+                          result.user!.sendEmailVerification();
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CheckEmailPage(email: emailController.text, pass: passController.text)));
                         }
                       }
                     }

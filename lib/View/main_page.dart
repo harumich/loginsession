@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:loginsession/View/start_up/login_page.dart';
+import 'package:loginsession/model/account.dart';
 import 'package:loginsession/utils/authentication.dart';
+import 'package:loginsession/utils/firestore/users.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -10,7 +12,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  TextEditingController contentController = TextEditingController();  //テキストフィールドの入力値を取得するための設定
+  Account myAccount =Authentication.myAccount!;  //テキストフィールドの入力値を取得するための設定
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,21 @@ class _MainPageState extends State<MainPage> {
               ));
             },
                 child: Text('ログアウト')
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+                style: ElevatedButton.styleFrom(primary: Colors.red),
+                onPressed: () {
+                  UserFirestore.deleteUser(myAccount.id);
+                  Authentication.deleteAuth();
+                  while(Navigator.canPop(context)) {
+                    Navigator.pop(context);
+                  }
+                  Navigator.pushReplacement(context, MaterialPageRoute(
+                      builder: (context) => LoginPage()
+                  ));
+                },
+                child: Text('アカウント削除')
             ),
           ],
         ),

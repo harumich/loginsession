@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:loginsession/View/main_page.dart';
 import 'package:loginsession/utils/authentication.dart';
 import 'package:loginsession/utils/firestore/users.dart';
+import 'package:loginsession/utils/widget_utils.dart';
 
 class CheckEmailPage extends StatefulWidget {
   final String email;
@@ -16,13 +17,7 @@ class _CheckEmailPageState extends State<CheckEmailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: IconThemeData(color: Colors.black),
-        title: Text('メールアドレスを確認', style: TextStyle(color: Colors.black),),
-        centerTitle: true,
-      ),
+      appBar: WidgetUtils.createAppBar('メールアドレスを確認'),
       body: Column(
         children: [
           Text('登録いただいたメールアドレス宛に確認のメールを送信しております。そちらに記載されているURLをクリックして認証をお願い致します。。'),

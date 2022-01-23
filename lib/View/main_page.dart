@@ -3,6 +3,7 @@ import 'package:loginsession/View/start_up/login_page.dart';
 import 'package:loginsession/model/account.dart';
 import 'package:loginsession/utils/authentication.dart';
 import 'package:loginsession/utils/firestore/users.dart';
+import 'package:loginsession/utils/widget_utils.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -17,13 +18,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('新規投稿', style: TextStyle(color: Colors.black),),
-        backgroundColor: Theme.of(context).canvasColor,//bodyと同じ色の背景に
-        elevation: 2,
-        iconTheme: IconThemeData(color: Colors.black),  //戻る矢印を黒色にする
-      ),
+      appBar: WidgetUtils.createAppBar('メインページ'),
       body: Container(
         width: double.infinity,
         child: Column(

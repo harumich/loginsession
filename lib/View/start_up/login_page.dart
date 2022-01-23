@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:loginsession/View/main_page.dart';
 import 'package:loginsession/View/start_up/create_account_page.dart';
 import 'package:loginsession/utils/authentication.dart';
@@ -80,7 +81,20 @@ class _LoginPageState extends State<LoginPage> {
                         }
                       },
                     child: Text('emailでログイン')
-                )
+                ),
+                SignInButton(
+                    Buttons.Google,
+                    onPressed: () async{
+                      var result = await Authentication.signInWithGoogle();
+                      if(result is UserCredential) {
+                        var result = await UserFirestore.getUser(Authentication.currentFirebaseUser!.uid);
+                        if(result == true) {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
+                        } else{
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccountPage()));
+                        }
+                      }
+                    })
               ],
             ),
           ),

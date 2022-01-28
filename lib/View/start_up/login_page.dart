@@ -89,9 +89,9 @@ class _LoginPageState extends State<LoginPage> {
                       if(result is UserCredential) {
                         var result = await UserFirestore.getUser(Authentication.currentFirebaseUser!.uid);
                         if(result == true) {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => MainPage()));
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
                         } else{
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccountPage()));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => CreateAccountPage(isSignInWithGoogle: true)));
                         }
                       }
                     })

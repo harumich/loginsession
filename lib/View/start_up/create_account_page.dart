@@ -125,13 +125,14 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
                           Navigator.pop(context);
                           Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => MainPage()));
                         }
-                      }
-                      var result = await Authentication.signUp(email: emailController.text, pass: passController.text);
-                      if(result is UserCredential) {
-                        var _result = await createAccount(result.user!.uid);
-                        if(_result == true) {
-                          result.user!.sendEmailVerification();
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => CheckEmailPage(email: emailController.text, pass: passController.text)));
+                      }else{
+                        var result = await Authentication.signUp(email: emailController.text, pass: passController.text);
+                        if(result is UserCredential) {
+                          var _result = await createAccount(result.user!.uid);
+                          if(_result == true) {
+                            result.user!.sendEmailVerification();
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => CheckEmailPage(email: emailController.text, pass: passController.text)));
+                          }
                         }
                       }
                     }

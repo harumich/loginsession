@@ -24,26 +24,26 @@ class UserFirestore {
     }
   }
   static Future<dynamic> getUser(String uid) async{
-    try{
       DocumentSnapshot documentSnapshot = await users.doc(uid).get();
+      if(documentSnapshot.exists ) {
       Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
-      Account myAccount = Account(
-          id: uid,
-          name: data['name'],
-          userId: data['user_id'],
-          selfIntroduction: data['self_introduction'],
-          imagePath: data['image_path'],
-          createdTime: data['created_time'],
-          updatedTime: data['updated_time']
-      );
-      Authentication.myAccount = myAccount;
-      print('ユーザー所得成功');
-      return true;
-    } on FirebaseException catch(e) {
-      print('ユーザー取得エラー: $e');
+        Account myAccount = Account(
+            id: uid,
+            name: data['name'],
+            userId: data['user_id'],
+            selfIntroduction: data['self_introduction'],
+            imagePath: data['image_path'],
+            createdTime: data['created_time'],
+            updatedTime: data['updated_time']
+        );
+        Authentication.myAccount = myAccount;
+        print('ユーザー取得成功');
+        return true;
+      }
+      print('ユーザー取得エラー');
       return false;
     }
-  }
+
 
   static Future<dynamic> deleteUser(String accountId) async{
     users.doc(accountId).delete();
